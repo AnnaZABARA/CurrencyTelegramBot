@@ -28,17 +28,17 @@ def get_price(message: telebot.types.Message):
     try:
         values = message.text.split(' ')
 
-        if len(values) != 3:
+        if len(values) != 3:  #задаем исключение, если пользователь ввел не три параметра и выводим ошибку
             raise CurrencyException('Введите три параметра')
 
         quote, base, amount = values
         total_base = CurrencyConverter.get_price(quote, base, amount)
     except CurrencyException as e:
-        bot.reply_to(message, f'Ошибка пользователя\n{e}')
+        bot.reply_to(message, f'Ошибка пользователя\n{e}') # если пользователь вводит неверные данные
     except Exception as e:
         bot.reply_to(message, f'Не удалось обработать команду\n{e} ')
     else:
-        text = f'Перевод {amount} {quote} в {base} - равен {total_base}'
+        text = f'Перевод {amount} {quote} в {base} - равен {total_base}' #пользователь ввел валидные данные и бот конвертирует корректно
         bot.send_message(message.chat.id, text)
 
 
